@@ -59,6 +59,10 @@ if [[ "$OSTYPE" = darwin* ]] ; then
       echo "∞"
     fi
   }
+  
+  function battery_is_charging() {
+	  [[ $(ioreg -rc "AppleSmartBattery"| grep '^.*"IsCharging"\ =\ ' | sed -e 's/^.*"IsCharging"\ =\ //') == "Yes" ]]
+  }
 
   function battery_is_charging() {
     [[ $(ioreg -rc "AppleSmartBattery"| grep '^.*"IsCharging"\ =\ ' | sed -e 's/^.*"IsCharging"\ =\ //') == "Yes" ]]
@@ -138,7 +142,6 @@ function battery_level_gauge() {
   if [[ $battery_remaining_percentage =~ [0-9]+ ]]; then
     local filled=$(((( $battery_remaining_percentage + $gauge_slots - 1) / $gauge_slots)));
     local empty=$(($gauge_slots - $filled));
-
     if [[ $filled -gt $green_threshold ]]; then local gauge_color=$color_green;
     elif [[ $filled -gt $yellow_threshold ]]; then local gauge_color=$color_yellow;
     else local gauge_color=$color_red;
