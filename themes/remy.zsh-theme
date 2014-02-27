@@ -125,7 +125,8 @@ build_prompt() {
   prompt_dir
   prompt_end
 }
- 
+
+## RPROMPT='$(prompt_online) $(battery_charge)'  ## use this for a laptop
 RPROMPT='$(prompt_online)'
  
 PROMPT='%{%f%b%k%}$(build_prompt) 
